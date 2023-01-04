@@ -2,8 +2,10 @@ extends Node2D
 
 var castle = preload("res://Scenes/Castle.tscn")
 var house = preload("res://Scenes/House.tscn")
+var grass = preload("res://Scenes/Grass.tscn")
+var mountain = preload("res://Scenes/Mountain.tscn")
 
-var tiles = [castle, house]
+var tiles = [castle, house, grass, mountain]
 
 # very basic function that fills the screen with castles
 # default values based on screen height/width
