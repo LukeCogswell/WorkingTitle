@@ -3,6 +3,7 @@ extends Node2D
 var castle = preload("res://Scenes/Castle.tscn")
 
 # very basic function that fills the screen with castles
+# default values based on screen height/width
 func make_tiles(cols : int = 32, rows : int = 18):
 	for x in cols:
 		for y in rows:
