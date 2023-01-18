@@ -7,13 +7,10 @@ var mountain = preload("res://Scenes/Mountain.tscn")
 
 var tiles = [castle, house, grass, mountain]
 
-onready var noise = $"land noise".texture.noise
-
 func _ready():
 	generate_using_noise()
 #	make_tiles()
 
-# very basic function that fills the screen with castles
 # default values based on screen height/width
 func make_tiles(cols : int = 32, rows : int = 18):
 	for x in cols:
@@ -25,10 +22,15 @@ func make_tiles(cols : int = 32, rows : int = 18):
 			add_child(new_castle)
 
 func generate_using_noise(cols : int = 32, rows : int = 18):
+	
+	var altitiude_noise = OpenSimplexNoise.new()
+	altitiude_noise.octaves = 2
+	altitiude_noise.period = 20
+	
 	for x in cols:
 		for y in rows:
 			var pos = Vector2(x * 8, y * 8)
-			var val = noise.get_noise_2d(pos.x, pos.y)
+			var val = altitiude_noise.get_noise_2d(pos.x, pos.y)
 			if val > 0:
 				make_at(grass, pos)
 			else:

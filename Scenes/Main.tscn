@@ -1,17 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Scripts/Main.gd" type="Script" id=2]
-
-[sub_resource type="OpenSimplexNoise" id=1]
-octaves = 2
-period = 21.9
-persistence = 1.0
-lacunarity = 4.0
-
-[sub_resource type="NoiseTexture" id=2]
-width = 32
-height = 18
-noise = SubResource( 1 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 2 )
@@ -19,9 +8,3 @@ script = ExtResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
-
-[node name="land noise" type="Sprite" parent="."]
-visible = false
-position = Vector2( 128, 71.75 )
-scale = Vector2( 8, 8.02778 )
-texture = SubResource( 2 )
