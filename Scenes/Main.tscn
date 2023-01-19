@@ -8,3 +8,18 @@ script = ExtResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
+
+[node name="Button" type="Button" parent="."]
+margin_left = 242.0
+margin_top = 122.0
+margin_right = 254.0
+margin_bottom = 142.0
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 229.0
+margin_top = 122.0
+margin_right = 241.0
+margin_bottom = 142.0
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]

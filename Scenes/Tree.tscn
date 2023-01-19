@@ -1,12 +1,14 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Sprites/spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Tree.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
 region = Rect2( 112, 112, 8, 8 )
 
-[node name="Sprite" type="Sprite"]
+[node name="Tree" type="Sprite"]
 texture = SubResource( 1 )
 centered = false
 region_rect = Rect2( 112, 113, 8, 7 )
+script = ExtResource( 2 )
