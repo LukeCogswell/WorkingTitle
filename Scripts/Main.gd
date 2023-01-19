@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var ySort = $YSort
+
 var castle = preload("res://Scenes/Castle.tscn")
 var house = preload("res://Scenes/House.tscn")
 var grass = preload("res://Scenes/Grass.tscn")
@@ -15,7 +17,7 @@ func _ready():
 func make_tiles(cols : int = 32, rows : int = 18):
 	for x in cols:
 		for y in rows:
-			var new_pos = Vector2(x * 8, y * 8)
+			var new_pos = Vector2(x * 16, y * 16)
 			var choice = rand_range(0, len(tiles))
 			var new_castle = tiles[choice].instance()
 			new_castle.position = new_pos
@@ -25,11 +27,11 @@ func generate_using_noise(cols : int = 32, rows : int = 18):
 	
 	var altitiude_noise = OpenSimplexNoise.new()
 	altitiude_noise.octaves = 2
-	altitiude_noise.period = 20
+	altitiude_noise.period = 30
 	
 	for x in cols:
 		for y in rows:
-			var pos = Vector2(x * 8, y * 8)
+			var pos = Vector2(x * 16, y * 16)
 			var val = altitiude_noise.get_noise_2d(pos.x, pos.y)
 			if val > 0:
 				make_at(grass, pos)
@@ -39,4 +41,4 @@ func generate_using_noise(cols : int = 32, rows : int = 18):
 func make_at(scene, pos : Vector2):
 	var new_child = scene.instance()
 	new_child.position = pos
-	add_child(new_child)
+	ySort.add_child(new_child)

@@ -2,7 +2,7 @@ extends Area2D
 
 # Grid-based cursor
 
-export var tile_size := 8
+export var tile_size := 16
 
 func _ready():
 	# hide mouse
