@@ -7,7 +7,7 @@ func _ready():
 	randomize()
 
 func _physics_process(delta):
-	if rand_range(0, 100) < 10:
+	if rand_range(0, 100) < 3:
 		direction = Vector2(rand_range(-1.0, 1.0), rand_range(-1.0, 1.0)).normalized()
 	
 	move_and_slide(direction * speed)

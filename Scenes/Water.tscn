@@ -4,8 +4,8 @@
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
-region = Rect2( 80, 96, 16, 16 )
+region = Rect2( 96, 128, 16, 16 )
 
-[node name="Grass" type="Sprite"]
+[node name="Sprite" type="Sprite"]
 texture = SubResource( 1 )
 centered = false

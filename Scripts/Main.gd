@@ -6,6 +6,7 @@ var castle = preload("res://Scenes/Castle.tscn")
 var house = preload("res://Scenes/House.tscn")
 var grass = preload("res://Scenes/Grass.tscn")
 var mountain = preload("res://Scenes/Mountain.tscn")
+var water = preload("res://Scenes/Water.tscn")
 
 var tiles = [castle, house, grass, mountain]
 
@@ -33,9 +34,11 @@ func generate_using_noise(cols : int = 32, rows : int = 18):
 		for y in rows:
 			var pos = Vector2(x * 16, y * 16)
 			var val = altitiude_noise.get_noise_2d(pos.x, pos.y)
-			if val > 0:
+			if val > .5:
+				make_at(water, pos)
+			elif val > -.2:
 				make_at(grass, pos)
-			else:
+			elif val < -.2:
 				make_at(mountain, pos)
 
 func make_at(scene, pos : Vector2):
