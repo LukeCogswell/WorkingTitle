@@ -25,6 +25,7 @@ var tiles = [castle, house, grass, mountain]
 
 func _ready():
 	seed(Seed)
+	rngGen.seed = Seed
 	altitude_noise.octaves = noiseOctaves
 	altitude_noise.period = noisePeriod
 	altitude_noise.seed = Seed
@@ -37,18 +38,30 @@ func generate_using_noise(cols, rows):
 		for y in rows:
 			var pos = Vector2(x * tileSize, y * tileSize)
 			var val = altitude_noise.get_noise_2d(pos.x, pos.y)
-			if val < -0.5:
-				make_at(water, pos)
-			elif val < 0:
+#			if val < -0.5:
+#				make_at(water, pos)
+			if val < 0:
 				make_at(grass, pos)
 			elif val < 0.35:
 				make_at(tree, pos)
 			else:
 				make_at(mountain, pos)
-#	generate_all_rivers(cols, rows)
 
+func generate_rivers():
+	var randChoice = rand_range(5, len(map)-5)
+	var startingTile = map[randChoice][0]
+	var startingX = startingTile.position.x / tileSize 
+	var y = 0
+	var previousPos = Vector2(startingX, y)
+	var offsetX = 0
+	while y < mapRows and previousPos.x + offsetX > -1 and previousPos.x + offsetX < mapCols:
+		previousPos = Vector2(previousPos.x + offsetX, y)
+		make_at(water, Vector2(previousPos.x * tileSize, previousPos.y * tileSize))
+		offsetX = rngGen.randi_range(-1, 1)
+		if offsetX == 0:
+			y += 1
 
-func generate_all_rivers(cols, rows):
+func generate_all_lakes(cols, rows):
 	var waterStartPoints = []
 	for x in cols:
 		for y in rows:
@@ -57,10 +70,10 @@ func generate_all_rivers(cols, rows):
 			if map[x][y].type == WATER:
 				waterStartPoints.append(Vector2(x * tileSize, y * tileSize))
 	for k in waterStartPoints.size():
-		generate_river(waterStartPoints[k])
+		generate_lake(waterStartPoints[k])
 
 
-func generate_river(pos):
+func generate_lake(pos):
 	var currentPos = pos
 	var i = 0
 	while i < riverLength:
@@ -73,7 +86,6 @@ func generate_river(pos):
 			return
 		 #{WATER, CASTLE, HOUSE, GRASS, MOUNTAIN, TREE}
 		var fiveXfiveTypes = get5x5TypeList(Vector2(currentPos.x / tileSize, currentPos.y / tileSize))
-#		print(fiveXfiveTypes)
 		currentPos = Vector2((currentPos.x/tileSize + offsetX) * tileSize, (currentPos.y/tileSize + offsetY) * tileSize)
 		var currentTile = map[int(currentPos.x/tileSize)][int(currentPos.y/tileSize)]
 		if currentTile.type == WATER:
@@ -94,10 +106,12 @@ func make_at(scene, pos : Vector2):
 	var new_child = scene.instance()
 	new_child.position = pos
 	add_child(new_child)
+	var old_tile = null
 	if map[int(pos.x / tileSize)][int(pos.y / tileSize)] != null:
-		var old_tile = map[int(pos.x / tileSize)][int(pos.y / tileSize)]
-		old_tile.queue_free()
+		old_tile = map[int(pos.x / tileSize)][int(pos.y / tileSize)]
 	map[int(pos.x / tileSize)][int(pos.y / tileSize)] = new_child
+	if old_tile:
+		old_tile.queue_free()
 	
 func get_5_by_5(tileScene):
 	var centerCoord = Vector2(int(tileScene.position.x / tileSize), int(tileScene.position.y / tileSize))
@@ -113,7 +127,6 @@ func get5x5TypeList(pos):
 	
 	for x in 5:
 		for y in 5:
-			print(str(pos.x - 2 + x) + " " + str(pos.y - 2 + y))
 			if pos.x - 2 + x < mapCols and pos.y - 2 + y < mapRows:
 				tileTypeList.append(map[pos.x - 2 + x][pos.y - 2 + y].type)
 	for j in tileTypeList.size():
@@ -133,7 +146,7 @@ func get5x5TypeList(pos):
 
 
 func _on_Button_pressed():
-	generate_all_rivers(mapCols, mapRows)
+	generate_rivers()
 
 
 func _on_Button2_pressed():
