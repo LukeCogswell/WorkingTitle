@@ -13,6 +13,7 @@ region = Rect2( 112, 88, 16, 8 )
 [node name="Mountain" type="Sprite"]
 texture = SubResource( 1 )
 centered = false
+script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -8 )
