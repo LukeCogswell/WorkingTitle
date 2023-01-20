@@ -14,19 +14,18 @@ anchor_mode = 0
 current = true
 
 [node name="Button" type="Button" parent="."]
-margin_left = 495.0
-margin_top = 264.0
-margin_right = 507.0
-margin_bottom = 284.0
+margin_left = 480.0
+margin_top = 256.0
+margin_right = 504.0
+margin_bottom = 280.0
 
 [node name="Button2" type="Button" parent="."]
-margin_left = 482.0
-margin_top = 264.0
-margin_right = 494.0
-margin_bottom = 284.0
+margin_left = 448.0
+margin_top = 256.0
+margin_right = 472.0
+margin_bottom = 280.0
 
 [node name="Cursor" parent="." instance=ExtResource( 1 )]
-position = Vector2( -96, 32 )
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]

@@ -8,6 +8,7 @@ var grass = preload("res://Scenes/Grass.tscn")
 var mountain = preload("res://Scenes/Mountain.tscn")
 var tree = preload("res://Scenes/Tree.tscn")
 var water = preload("res://Scenes/Water.tscn")
+var hill = preload("res://Scenes/Hill.tscn")
 
 onready var button = get_node("Button")
 
@@ -18,7 +19,9 @@ export var mapCols = 32
 export var mapRows = 18
 
 var noiseOctaves = 2
-var noisePeriod = 30
+var noisePeriod = 100
+var noiseLacunarity = 2
+var noisePersitance = 7
 var altitude_noise = OpenSimplexNoise.new()
 var map = []
 var Seed = rand_range(-1, 1000)
@@ -33,6 +36,8 @@ func _ready():
 	rngGen.seed = Seed
 	altitude_noise.octaves = noiseOctaves
 	altitude_noise.period = noisePeriod
+	altitude_noise.persistence = noisePersitance
+	altitude_noise.lacunarity = noiseLacunarity
 	altitude_noise.seed = Seed
 	for i in 32:
 		map.append([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
@@ -47,8 +52,8 @@ func generate_using_noise(cols, rows):
 #				make_at(water, pos)
 			if val < 0:
 				make_at(grass, pos)
-			elif val < 0.35:
-				make_at(tree, pos)
+			elif val < 0.3:
+				make_at(hill, pos)
 			else:
 				make_at(mountain, pos)
 
