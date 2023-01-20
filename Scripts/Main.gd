@@ -8,9 +8,12 @@ var grass = preload("res://Scenes/Grass.tscn")
 var mountain = preload("res://Scenes/Mountain.tscn")
 var tree = preload("res://Scenes/Tree.tscn")
 var water = preload("res://Scenes/Water.tscn")
+
 onready var button = get_node("Button")
+
 var tileSize = 16
 var rngGen = RandomNumberGenerator.new()
+
 export var mapCols = 32
 export var mapRows = 18
 
@@ -107,7 +110,7 @@ func generate_lake(pos):
 func make_at(scene, pos : Vector2):
 	var new_child = scene.instance()
 	new_child.position = pos
-	add_child(new_child)
+	ySort.add_child(new_child)
 	var old_tile = null
 	if map[int(pos.x / tileSize)][int(pos.y / tileSize)] != null:
 		old_tile = map[int(pos.x / tileSize)][int(pos.y / tileSize)]
@@ -149,7 +152,6 @@ func get5x5TypeList(pos):
 
 func _on_Button_pressed():
 	generate_rivers()
-
 
 func _on_Button2_pressed():
 	get_tree().reload_current_scene()
